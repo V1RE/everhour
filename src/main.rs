@@ -1,13 +1,11 @@
-mod api;
-mod status;
+use everhour::api::Request;
+use everhour::config;
+use everhour::status::status;
 
 use std::process;
 
-use crate::api::Api;
-use crate::status::status;
-
 fn main() {
-    let api = Api::new();
+    let api = Request::new(config::API_KEY);
     let result = status(api);
 
     match result {
