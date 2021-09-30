@@ -70,7 +70,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "everhour_cli"
+name = "everhour"
 version = "0.1.0"
 dependencies = [
  "humantime",
