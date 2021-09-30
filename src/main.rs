@@ -3,10 +3,12 @@ mod status;
 
 use std::process;
 
+use crate::api::Api;
 use crate::status::status;
 
 fn main() {
-    let result = status();
+    let api = Api::new();
+    let result = status(api);
 
     match result {
         Err(_) => {
