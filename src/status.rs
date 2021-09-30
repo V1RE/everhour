@@ -8,9 +8,9 @@ fn get_timer() -> Result<Value, Box<dyn Error>> {
     let client = reqwest::blocking::Client::new();
 
     let res = client
-        .get("https://api.everhour.com/timers/current")
+        .get("https://private-anon-8eb29346f3-everhour.apiary-mock.com/timers/current")
         .header(CONTENT_TYPE, "application/json")
-        .header("X-Api-Key", "asdf")
+        .header("X-Api-Key", "aaaa-bbbb-cccddd-eeefff-gggghhii")
         .send()?
         .json::<serde_json::Value>()?;
 
@@ -24,11 +24,16 @@ pub fn status() -> Result<bool, Box<dyn Error>> {
     };
 
     if timer["duration"].is_number() {
-        let duration = Duration::new(timer["duration"].as_u64().unwrap(), 0);
-        let time = format_duration(duration).to_string();
-        println!(" {}", time);
-        return Ok(true);
-    }
+        let mut timer_duration = timer["duration"].as_u64().unwrap();
+        timer_duration = timer["today"].as_u64().unwrap_or(timer_duration);
 
-    Ok(false)
+        let duration = Duration::new(timer_duration, 0);
+        let time = format_duration(duration).to_string();
+
+        println!(" {}", time);
+
+        Ok(true)
+    } else {
+        Ok(false)
+    }
 }
