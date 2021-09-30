@@ -1,11 +1,11 @@
-use everhour::api::Request;
+use everhour::api::Api;
 use everhour::config;
 use everhour::status::status;
 
 use std::process;
 
 fn main() {
-    let api = Request::new(config::API_KEY);
+    let api = Api::new(config::API_KEY);
     let result = status(api);
 
     match result {

@@ -5,13 +5,13 @@ use serde_json::Value;
 
 type JSON = Result<Value>;
 
-pub struct Request {
+pub struct Api {
     client: Client,
 }
 
 // ^([a-z0-9]+-?)+$
 
-impl Request {
+impl Api {
     pub fn new(api_key: &str) -> Self {
         let api_header_value = HeaderValue::from_str(&api_key).unwrap();
 
