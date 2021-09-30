@@ -1,23 +1,23 @@
+use crate::Result;
 use reqwest::blocking::Client;
-use reqwest::header;
+use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use serde_json::Value;
-use std::error::Error;
 
-pub struct Api {
+type JSON = Result<Value>;
+
+pub struct Request {
     client: Client,
 }
 
-impl Api {
-    pub fn new() -> Self {
-        let mut headers = header::HeaderMap::new();
-        headers.insert(
-            "X-Api-Key",
-            header::HeaderValue::from_static("aaaa-bbbb-cccddd-eeefff-gggghhii"),
-        );
-        headers.insert(
-            header::CONTENT_TYPE,
-            header::HeaderValue::from_static("application/json"),
-        );
+// ^([a-z0-9]+-?)+$
+
+impl Request {
+    pub fn new(api_key: &str) -> Self {
+        let api_header_value = HeaderValue::from_str(&api_key).unwrap();
+
+        let mut headers = HeaderMap::new();
+        headers.insert("X-Api-Key", api_header_value);
+        headers.insert(CONTENT_TYPE, HeaderValue::from_static("application/json"));
 
         let timeout = std::time::Duration::from_secs(10);
 
@@ -25,12 +25,12 @@ impl Api {
             .default_headers(headers)
             .timeout(timeout)
             .build()
-            .unwrap();
+            .expect("The TLS backend cannot be initialized or the resolver cannot load the system configuration.");
 
         Self { client }
     }
 
-    pub fn get(&self, path: &str) -> Result<Value, Box<dyn Error>> {
+    pub fn get(&self, path: &str) -> JSON {
         let res = &self
             .client
             .get(format!(

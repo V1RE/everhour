@@ -1,10 +1,11 @@
-use crate::api::Api;
+use crate::api::Request;
+use crate::Result;
+
 use humantime::format_duration;
-use std::error::Error;
 use std::time::Duration;
 
-pub fn status(api: Api) -> Result<bool, Box<dyn Error>> {
-    let timer = match api.get("timers/current") {
+pub fn status(request: Request) -> Result<bool> {
+    let timer = match request.get("timers/current") {
         Ok(timer) => timer,
         Err(err) => return Err(err),
     };
