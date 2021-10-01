@@ -1,4 +1,4 @@
-use crate::Result;
+use crate::{config, Result};
 use reqwest::blocking::Client;
 use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use serde_json::Value;
@@ -12,8 +12,8 @@ pub struct Api {
 // ^([a-z0-9]+-?)+$
 
 impl Api {
-    pub fn new(api_key: &str) -> Self {
-        let api_header_value = HeaderValue::from_str(&api_key).unwrap();
+    pub fn new() -> Self {
+        let api_header_value = HeaderValue::from_str(config::API_KEY).unwrap();
 
         let mut headers = HeaderMap::new();
         headers.insert("X-Api-Key", api_header_value);
