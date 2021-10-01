@@ -41,3 +41,31 @@ pub fn status(long: bool) -> Result<bool> {
         Ok(long)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::{json, Value};
+
+    fn example_active_timer_response() -> Value {
+        json!({
+          "status": "active",
+          "duration": 16,
+          "today": 7200,
+          "startedAt": "2018-01-16 12:42:59",
+          "userDate": "2018-01-16",
+        })
+    }
+
+    fn example_stopped_timer_response() -> Value {
+        json!({
+          "status": "stopped",
+        })
+    }
+
+    #[test]
+    fn test_timer_active() {
+        assert!(is_timer_active(example_active_timer_response()));
+        assert!(!is_timer_active(example_stopped_timer_response()));
+    }
+}
