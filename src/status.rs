@@ -6,7 +6,7 @@ use serde_json::Value;
 use std::time::Duration;
 
 fn get_current_timer() -> Result<Value> {
-    Api::new().get("timers/current")
+    Api::default().get("timers/current")
 }
 
 fn is_timer_active(timer: Value) -> bool {
