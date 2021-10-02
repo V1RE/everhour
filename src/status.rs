@@ -51,7 +51,7 @@ mod tests {
         json!({
           "status": "active",
           "duration": 16,
-          "today": 7200,
+          "today": 10_396,
         })
     }
 
@@ -67,8 +67,13 @@ mod tests {
 
     #[test]
     fn timer_duration() {
-        assert_eq!(get_timer_duration(active_timer_value()), "2h");
+        assert_eq!(get_timer_duration(active_timer_value()), "2h 53m 16s");
         assert_eq!(get_timer_duration(json!({"duration": 7200})), "2h");
         assert_eq!(get_timer_duration(stopped_timer_value()), "0s");
+    }
+
+    #[test]
+    fn status_short() {
+        assert_eq!(" 2h 53m 16s", get_status_short(active_timer_value()))
     }
 }
