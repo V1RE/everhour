@@ -64,4 +64,11 @@ mod tests {
         assert!(is_timer_active(active_timer_value()));
         assert!(!is_timer_active(stopped_timer_value()));
     }
+
+    #[test]
+    fn timer_duration() {
+        assert_eq!(get_timer_duration(active_timer_value()), "2h");
+        assert_eq!(get_timer_duration(json!({"duration": 7200})), "2h");
+        assert_eq!(get_timer_duration(stopped_timer_value()), "0s");
+    }
 }
