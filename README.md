@@ -1,4 +1,5 @@
 # Everhour CLI
+[![dependency status](https://deps.rs/repo/github/V1RE/everhour/status.svg)](https://deps.rs/repo/github/V1RE/everhour)
 
 A CLI tool built in Rust to interact with the [Everhour API](https://everhour.docs.apiary.io/)
 
