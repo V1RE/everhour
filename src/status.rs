@@ -6,7 +6,7 @@ use serde_json::Value;
 use std::time::Duration;
 
 fn get_current_timer() -> Result<Value> {
-    Api::new().get("timers/current")
+    Api::default().get("timers/current")
 }
 
 fn is_timer_active(timer: Value) -> bool {
@@ -39,5 +39,36 @@ pub fn status(long: bool) -> Result<bool> {
         Ok(true)
     } else {
         Ok(long)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::{json, Value};
+
+    fn active_timer_value() -> Value {
+        json!({
+          "status": "active",
+          "duration": 16,
+          "today": 7200,
+        })
+    }
+
+    fn stopped_timer_value() -> Value {
+        json!({"status": "stopped"})
+    }
+
+    #[test]
+    fn timer_active() {
+        assert!(is_timer_active(active_timer_value()));
+        assert!(!is_timer_active(stopped_timer_value()));
+    }
+
+    #[test]
+    fn timer_duration() {
+        assert_eq!(get_timer_duration(active_timer_value()), "2h");
+        assert_eq!(get_timer_duration(json!({"duration": 7200})), "2h");
+        assert_eq!(get_timer_duration(stopped_timer_value()), "0s");
     }
 }

@@ -3,7 +3,7 @@ use reqwest::blocking::Client;
 use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use serde_json::Value;
 
-type JSON = Result<Value>;
+type Json = Result<Value>;
 
 pub struct Api {
     client: Client,
@@ -11,9 +11,15 @@ pub struct Api {
 
 // ^([a-z0-9]+-?)+$
 
+impl Default for Api {
+    fn default() -> Self {
+        Self::new(config::API_KEY)
+    }
+}
+
 impl Api {
-    pub fn new() -> Self {
-        let api_header_value = HeaderValue::from_str(config::API_KEY).unwrap();
+    pub fn new(api_key: &str) -> Self {
+        let api_header_value = HeaderValue::from_str(api_key).unwrap();
 
         let mut headers = HeaderMap::new();
         headers.insert("X-Api-Key", api_header_value);
@@ -30,7 +36,7 @@ impl Api {
         Self { client }
     }
 
-    pub fn get(&self, path: &str) -> JSON {
+    pub fn get(&self, path: &str) -> Json {
         let res = &self
             .client
             .get(format!(
