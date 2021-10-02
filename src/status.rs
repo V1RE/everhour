@@ -47,25 +47,21 @@ mod tests {
     use super::*;
     use serde_json::{json, Value};
 
-    fn example_active_timer_response() -> Value {
+    fn active_timer_value() -> Value {
         json!({
           "status": "active",
           "duration": 16,
           "today": 7200,
-          "startedAt": "2018-01-16 12:42:59",
-          "userDate": "2018-01-16",
         })
     }
 
-    fn example_stopped_timer_response() -> Value {
-        json!({
-          "status": "stopped",
-        })
+    fn stopped_timer_value() -> Value {
+        json!({"status": "stopped"})
     }
 
     #[test]
-    fn test_timer_active() {
-        assert!(is_timer_active(example_active_timer_response()));
-        assert!(!is_timer_active(example_stopped_timer_response()));
+    fn timer_active() {
+        assert!(is_timer_active(active_timer_value()));
+        assert!(!is_timer_active(stopped_timer_value()));
     }
 }
