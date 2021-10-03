@@ -9,9 +9,10 @@ A CLI tool built in Rust to interact with the [Everhour API](https://everhour.do
 ## Features
 
 - [x] Display current timer status
-- [ ] Start/Stop timers
-- [ ] Find tasks (with fuzzyfinder?)
-- [ ] Display reported time in table
+- [x] Stop current timer
+- [ ] Start timer by ID
+- [ ] Find tasks (with [fuzzyfinder](https://github.com/lotabout/skim)?)
+- [ ] Display reported time in [table](https://github.com/Nukesor/comfy-table)
 
 ## Installation
 
