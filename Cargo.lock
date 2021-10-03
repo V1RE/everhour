@@ -119,6 +119,7 @@ dependencies = [
  "humantime",
  "reqwest",
  "serde_json",
+ "url",
 ]
 
 [[package]]
