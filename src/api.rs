@@ -1,7 +1,7 @@
 use crate::{config, Result};
 use reqwest::blocking::Client;
 use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
-use serde_json::Value;
+use serde_json::{json, Value};
 use url::Url;
 
 type Json = Result<Value>;
@@ -47,22 +47,14 @@ impl Api {
     }
 
     pub fn get(&self, path: &str) -> Json {
-        let res = &self
-            .client
-            .get(self.url(path))
-            .send()?
-            .json::<serde_json::Value>()?;
+        let res = &self.client.get(self.url(path)).send()?.json::<Value>()?;
 
-        Ok(serde_json::json!(res))
+        Ok(json!(res))
     }
 
     pub fn delete(&self, path: &str) -> Json {
-        let res = &self
-            .client
-            .delete(self.url(path))
-            .send()?
-            .json::<serde_json::Value>()?;
+        let res = &self.client.delete(self.url(path)).send()?.json::<Value>()?;
 
-        Ok(serde_json::json!(res))
+        Ok(json!(res))
     }
 }
