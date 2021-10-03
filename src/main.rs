@@ -11,10 +11,9 @@ fn main() {
 
     let matches = app.clone().get_matches();
 
-    let result = match matches.subcommand() {
-        Some(("status", _)) => status(false),
-        Some((command, _)) => unreachable!("Invalid subcommand: {}", command),
-        _ => panic!(),
+    let result = match matches.subcommand().unwrap() {
+        ("status", _) => status(false),
+        (command, _) => unreachable!("Invalid subcommand: {}", command),
     };
 
     match result {
