@@ -55,4 +55,14 @@ impl Api {
 
         Ok(serde_json::json!(res))
     }
+
+    pub fn delete(&self, path: &str) -> Json {
+        let res = &self
+            .client
+            .delete(self.url(path))
+            .send()?
+            .json::<serde_json::Value>()?;
+
+        Ok(serde_json::json!(res))
+    }
 }
