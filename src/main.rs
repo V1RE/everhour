@@ -1,19 +1,24 @@
+use clap::{crate_authors, crate_name, crate_version, App, AppSettings};
 use everhour::status::status;
-
 use std::process;
 
 fn main() {
-    let result = status(false);
+    let app = App::new(crate_name!())
+        .author(crate_authors!("\n"))
+        .version(crate_version!())
+        .setting(AppSettings::SubcommandRequiredElseHelp)
+        .subcommand(App::new("status"));
+
+    let matches = app.clone().get_matches();
+
+    let result = match matches.subcommand() {
+        Some(("status", _)) => status(false),
+        Some((command, _)) => unreachable!("Invalid subcommand: {}", command),
+        _ => panic!(),
+    };
 
     match result {
-        Err(_) => {
-            process::exit(1);
-        }
-        Ok(false) => {
-            process::exit(1);
-        }
-        Ok(true) => {
-            process::exit(0);
-        }
+        Ok(true) => process::exit(0),
+        _ => process::exit(1),
     }
 }
