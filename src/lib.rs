@@ -1,3 +1,5 @@
+pub extern crate lazy_static;
+
 pub mod api;
 pub mod config;
 pub mod status;

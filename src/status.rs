@@ -1,10 +1,10 @@
-use crate::api::Api;
+use crate::api::API;
 use crate::timer::{get_timer_duration, is_timer_active};
 use crate::Result;
 use serde_json::Value;
 
 pub fn get_current_timer() -> Result<Value> {
-    Api::default().get("timers/current")
+    API.get("timers/current")
 }
 
 fn get_status_short(timer: Value) -> String {
