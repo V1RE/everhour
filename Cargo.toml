@@ -18,6 +18,9 @@ clap = "3.0.0-beta.4"
 url = "2.2.2" 
 lazy_static = "1.4.0" 
 
+[dev-dependencies]
+httpmock = "0.6"
+
 [[bin]]
 name = "everhour"
 path = "src/main.rs"
