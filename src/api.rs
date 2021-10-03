@@ -25,7 +25,7 @@ impl Default for Api {
 }
 
 impl Api {
-    pub fn new(api_key: &str, base_url: &str) -> Self {
+    fn new(api_key: &str, base_url: &str) -> Self {
         let api_header_value = HeaderValue::from_str(api_key).unwrap();
 
         let mut headers = HeaderMap::new();
