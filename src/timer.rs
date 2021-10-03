@@ -1,4 +1,4 @@
-use crate::api::Api;
+use crate::api::API;
 use crate::Result;
 use humantime::format_duration;
 use serde_json::Value;
@@ -17,7 +17,7 @@ pub fn get_timer_duration(timer: Value) -> String {
 }
 
 pub fn stop() -> Result<bool> {
-    match Api::default().delete("/timers/current") {
+    match API.delete("/timers/current") {
         Ok(_) => Ok(true),
         Err(err) => Err(err),
     }

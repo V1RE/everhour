@@ -467,6 +467,7 @@ dependencies = [
  "clap",
  "httpmock",
  "humantime",
+ "lazy_static",
  "reqwest",
  "serde_json",
  "url",

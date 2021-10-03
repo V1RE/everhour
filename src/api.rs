@@ -1,10 +1,15 @@
 use crate::{config, Result};
+use lazy_static::lazy_static;
 use reqwest::blocking::Client;
 use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use serde_json::{json, Value};
 use url::Url;
 
 type Json = Result<Value>;
+
+lazy_static! {
+    pub static ref API: Api = Api::default();
+}
 
 pub struct Api {
     client: Client,
@@ -20,7 +25,7 @@ impl Default for Api {
 }
 
 impl Api {
-    pub fn new(api_key: &str, base_url: &str) -> Self {
+    fn new(api_key: &str, base_url: &str) -> Self {
         let api_header_value = HeaderValue::from_str(api_key).unwrap();
 
         let mut headers = HeaderMap::new();
