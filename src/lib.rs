@@ -1,6 +1,7 @@
 pub mod api;
 pub mod config;
 pub mod status;
+pub mod timer;
 
 use std::error::Error;
 
