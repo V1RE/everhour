@@ -58,3 +58,34 @@ impl Api {
         Ok(json!(res))
     }
 }
+
+#[cfg(test)]
+pub mod tests {
+    use super::*;
+    use crate::timer::tests::active_timer_value;
+    use httpmock::prelude::*;
+
+    pub fn server_api() -> (MockServer, Api) {
+        let server = MockServer::start();
+        let api = Api::new(config::API_KEY, &server.base_url());
+        (server, api)
+    }
+
+    #[test]
+    fn test_get() {
+        // Start a lightweight mock server.
+        let (server, api) = server_api();
+
+        // Create a mock on the server.
+        let mock_get_current = server.mock(|when, then| {
+            when.method(GET).path("/timers/current");
+            then.status(200).body(active_timer_value().to_string());
+        });
+
+        let res = api.get("/timers/current");
+
+        mock_get_current.assert();
+        assert!(&res.is_ok());
+        assert_eq!(&res.unwrap(), &active_timer_value());
+    }
+}
