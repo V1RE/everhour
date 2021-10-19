@@ -13,7 +13,7 @@ fn main() {
     let matches = app.clone().get_matches();
 
     let result = match matches.subcommand().unwrap() {
-        ("status", _) => status::short(),
+        ("status", _) => status::long(),
         ("stop", _) => timer::stop(),
         (command, _) => unreachable!("Invalid subcommand: {}", command),
     };
