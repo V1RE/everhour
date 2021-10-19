@@ -17,9 +17,13 @@ pub fn get_timer_duration(timer: Value) -> String {
 }
 
 pub fn stop() -> Result<bool> {
-    match API.delete("/timers/current") {
-        Ok(_) => Ok(true),
-        Err(err) => Err(err),
+    let timer = match API.delete("/timers/current") {
+        Ok(timer) => timer,
+        Err(err) => return Err(err),
+    };
+
+    if is_timer_active(timer) {
+        println!()
     }
 }
 
